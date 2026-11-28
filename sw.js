@@ -1,6 +1,6 @@
 // Release protocol: keep VERSION in sync with index.html. All future releases must retain this protocol.
-const VERSION='1.4.11';
-const BUILD_REVISION='1.4.11-spacing-1';
+const VERSION='1.4.12';
+const BUILD_REVISION='1.4.12-icons-1';
 const CACHE='iv-calculator-release-'+VERSION;
 const META='iv-calculator-release-control';
 const ROOT=new URL('./',self.registration.scope);
