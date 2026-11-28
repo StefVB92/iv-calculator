@@ -1,6 +1,6 @@
 // Release protocol: VERSION and BUILD must match index.html. Forced builds never change the selected version.
 const VERSION='1.4.13';
-const BUILD=2;
+const BUILD=3;
 const FORCED=true;
 const PREFIX='iv-calculator-release-';
 const CACHE=PREFIX+VERSION+'-build-'+BUILD;
