@@ -1,5 +1,6 @@
 // Release protocol: keep VERSION in sync with index.html. All future releases must retain this protocol.
 const VERSION='1.4.11';
+const BUILD_REVISION='1.4.11-spacing-1';
 const CACHE='iv-calculator-release-'+VERSION;
 const META='iv-calculator-release-control';
 const ROOT=new URL('./',self.registration.scope);
@@ -8,7 +9,7 @@ const INDEX=new URL('index.html',ROOT).href;
 const FILES=['manifest.webmanifest','icon-192.png','icon-512.png'];
 async function selected(){const c=await caches.open(META);const r=await c.match(PIN);return r?await r.text():null}
 async function select(version){const c=await caches.open(META);await c.put(PIN,new Response(version));}
-async function stage(){const html=await fetch(new Request(INDEX,{cache:'reload'}));if(!html.ok||!(await html.clone().text()).includes("const VERSION='"+VERSION+"'"))throw Error('Release files not synchronized');const c=await caches.open(CACHE);await c.put(INDEX,html);await c.addAll(FILES.map(f=>new Request(new URL(f,ROOT),{cache:'reload'})));}
+async function stage(){const html=await fetch(new Request(INDEX,{cache:'reload'}));if(!html.ok||!(await html.clone().text()).includes("const VERSION='"+VERSION+"'"))throw Error('Release files not synchronized');if(!(await html.clone().text()).includes("Build revision: "+BUILD_REVISION))throw Error("Build revision not synchronized");const c=await caches.open(CACHE);await c.addAll(FILES.map(f=>new Request(new URL(f,ROOT),{cache:'reload'})));await c.put(INDEX,html);}
 self.addEventListener('install',e=>e.waitUntil(stage()));
 // Only the one-time transition from a legacy worker (or a fresh installation) initializes the pin.
 // A later browser-driven activation must never overwrite an existing selected release.
